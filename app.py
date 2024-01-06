@@ -57,11 +57,11 @@ def get_recommendations():
     print(f"Received movie name: {movie_name}")
 
     recommended_movie_names, recommended_movie_posters,movie_ids = recommend(movie_name, movie_list, similarity)
-
+    movie_ids_str = [str(id) for id in movie_ids]
     response = {
         'recommended_movie_names': recommended_movie_names,
         'recommended_movie_posters': recommended_movie_posters,
-        'movie_ids': str(movie_ids)
+        'movie_ids': movie_ids_str
     }
     return jsonify(response)
 
