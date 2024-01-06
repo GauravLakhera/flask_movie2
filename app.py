@@ -31,12 +31,15 @@ def recommend(movie, movies, similarity):
 
         recommended_movie_names = []
         recommended_movie_posters = []
+        movie_ids = []
         for i in distances[1:6]:
             movie_id = movies.iloc[i[0]].movie_id
+            movie_ids.append(movie_id)
             recommended_movie_posters.append(fetch_poster(movie_id))
             recommended_movie_names.append(movies.iloc[i[0]].title)
 
-        return recommended_movie_names, recommended_movie_posters
+
+        return recommended_movie_names, recommended_movie_posters,movie_ids
     else:
         return [], []
 
@@ -53,14 +56,15 @@ def get_recommendations():
     movie_name = data.get('movie_name')
     print(f"Received movie name: {movie_name}")
 
-    recommended_movie_names, recommended_movie_posters = recommend(movie_name, movie_list, similarity)
+    recommended_movie_names, recommended_movie_posters,movie_ids = recommend(movie_name, movie_list, similarity)
 
     response = {
         'recommended_movie_names': recommended_movie_names,
-        'recommended_movie_posters': recommended_movie_posters
+        'recommended_movie_posters': recommended_movie_posters,
+        'movie_ids': str(movie_ids)
     }
     return jsonify(response)
 
 
-#if __name__ == '__main__':
-   # app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)
